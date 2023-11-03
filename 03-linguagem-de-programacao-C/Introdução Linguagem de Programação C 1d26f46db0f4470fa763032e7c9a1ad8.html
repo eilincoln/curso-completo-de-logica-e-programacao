@@ -1,0 +1,681 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Introdução: Linguagem de Programação C</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1d26f46d-b0f4-470f-a763-032e7c9a1ad8" class="page sans"><header><h1 class="page-title">Introdução: Linguagem de Programação C</h1><p class="page-description"></p></header><div class="page-body"><h2 id="49d1176d-a61e-43a0-adee-0106454b4ea4" class="">Linguagem de Programação no Geral</h2><p id="b9e1a3df-c436-442f-add8-6bb4edafdb26" class="">Linguagem escrita e formal que especifica um conjunto de instruções e regras usadas para gerar programas (software).</p><p id="6171efba-6047-498e-ac53-2ab8f2f56750" class="">Formada por um conjunto de regras sintáticas e semânticas.</p><h3 id="dd228902-6e66-4bfc-8bca-0feec00a2a66" class="">Código em C</h3><figure id="871c7b9f-3570-47b2-8d43-553aa13a9233" class="image" style="text-align:left"><a href="Introduc%CC%A7a%CC%83o%20Linguagem%20de%20Programac%CC%A7a%CC%83o%20C%201d26f46db0f4470fa763032e7c9a1ad8/Untitled.png"><img style="width:360px" src="Introduc%CC%A7a%CC%83o%20Linguagem%20de%20Programac%CC%A7a%CC%83o%20C%201d26f46db0f4470fa763032e7c9a1ad8/Untitled.png"/></a></figure><h3 id="22b9cd28-ca9f-4dd3-85d5-c90bea251b35" class=""><span style="border-bottom:0.05em solid">Regras </span>de Escrita</h3><figure id="2e32f1fd-9d8c-467e-879a-c897c8713cc6" class="image" style="text-align:left"><a href="Introduc%CC%A7a%CC%83o%20Linguagem%20de%20Programac%CC%A7a%CC%83o%20C%201d26f46db0f4470fa763032e7c9a1ad8/Untitled%201.png"><img style="width:297px" src="Introduc%CC%A7a%CC%83o%20Linguagem%20de%20Programac%CC%A7a%CC%83o%20C%201d26f46db0f4470fa763032e7c9a1ad8/Untitled%201.png"/></a></figure><ul id="84fed790-ac7b-471a-b9dd-3c4bfaa58153" class="bulleted-list"><li style="list-style-type:disc">Se há algum erro, a interface, mostra para nós que está errado.</li></ul><h3 id="63d12744-9f2f-46d0-a31b-56496e809aa5" class="">Erro semântico</h3><figure id="9b2b2980-73ba-488f-8e27-d76b71853c29" class="image" style="text-align:left"><a href="Introduc%CC%A7a%CC%83o%20Linguagem%20de%20Programac%CC%A7a%CC%83o%20C%201d26f46db0f4470fa763032e7c9a1ad8/Untitled%202.png"><img style="width:305px" src="Introduc%CC%A7a%CC%83o%20Linguagem%20de%20Programac%CC%A7a%CC%83o%20C%201d26f46db0f4470fa763032e7c9a1ad8/Untitled%202.png"/></a></figure><p id="0400ef11-339b-452b-9f85-87caa163ba0c" class="">No erro semântico é quando o código funciona, mas ele pode gerar algo diferente do que estamos esperando. </p><h3 id="4d95d641-9062-4d3b-b7af-ad1e0c16f6c8" class="">Linguagem de Programação</h3><ul id="585b542f-54d1-4244-868b-6d7c43beb679" class="bulleted-list"><li style="list-style-type:disc">Pode ser compiladas e transformada em um programa ou usada como script interpretado.</li></ul><p id="c267896f-262e-40b5-95f2-5cef3f74d49e" class="">
+</p><p id="93ba1b73-14b3-4f1f-b565-8d97e659b525" class=""><strong>COMPILADOR:</strong></p><ul id="de201cfc-36b8-4721-9ce8-8bfc38479eba" class="bulleted-list"><li style="list-style-type:disc">Converte as instruções de uma linguagem de programação para linguagem de máquina. </li></ul><ul id="e208d28b-1bb0-4181-b604-9c13d441cbf0" class="bulleted-list"><li style="list-style-type:disc"><strong>Exemplos: </strong>C, C++, Objective-C, Swift e Fortran.</li></ul><p id="18a63499-30d3-41f1-acf9-25513b9bac12" class="">
+</p><p id="dbd53cf3-0b65-4e56-9a27-3fce58040660" class=""><strong>INTERPRETADOR:</strong></p><ul id="0837da83-64a7-44de-a92e-7460652ba1dd" class="bulleted-list"><li style="list-style-type:disc">Traduz uma instrução por vez do código-fonte. Cada execução do programa precisa ser novamente traduzido e interpretado. </li></ul><ul id="3e415ab9-dbd2-42b3-875c-fc72d5250e29" class="bulleted-list"><li style="list-style-type:disc"><strong>Exemplos: </strong>Java, JavaScript, PHP e Python.</li></ul><p id="ccb0545e-d355-47bd-8605-962746986763" class="">
+</p><figure id="929ff875-6e98-4564-9534-5f7966706e16" class="image"><a href="Introduc%CC%A7a%CC%83o%20Linguagem%20de%20Programac%CC%A7a%CC%83o%20C%201d26f46db0f4470fa763032e7c9a1ad8/Untitled%203.png"><img style="width:1176px" src="Introduc%CC%A7a%CC%83o%20Linguagem%20de%20Programac%CC%A7a%CC%83o%20C%201d26f46db0f4470fa763032e7c9a1ad8/Untitled%203.png"/></a></figure><h2 id="bee15339-095d-470e-9a1a-46be00a36c95" class="">PARADIGMA</h2><p id="de967209-64c4-4938-8fc8-94c98dbb9d28" class=""><mark class="highlight-red"><strong>Paradigma de programação: </strong></mark></p><ul id="ff5544bd-6a82-4e47-90fe-e4769309e111" class="bulleted-list"><li style="list-style-type:disc">Classificação das linguagem de programação baseando-se em suas funcionalidades.</li></ul><ul id="430f77a7-399e-48e4-bd1a-292cbe561d46" class="bulleted-list"><li style="list-style-type:disc">As linguagem podem ser classificadas em vários paradigmas.</li></ul><p id="d70d10fc-4d4b-4f61-b236-1583baea7f35" class=""><mark class="highlight-red"><strong>Paradigmas mais comuns:</strong></mark></p><ul id="c58cebe7-04e0-44d9-86fb-da70a9073702" class="bulleted-list"><li style="list-style-type:disc"><strong>Imperativo</strong>: especifica os passos a serem seguidos<ul id="8d70cdf4-e842-4364-bcea-da16dd13fce0" class="bulleted-list"><li style="list-style-type:circle"><strong>Procedural</strong>: procedimentos que contém passos computacionais a serem executados. Ex: Fortran e C</li></ul><ul id="8aa86fa1-cbcf-4f9f-8661-2b5939b41637" class="bulleted-list"><li style="list-style-type:circle"><strong>Orientação a Objetos</strong>: define objetos e relações entre eles. Ex: Java, C++ e VB.Net</li></ul><ul id="16052a36-325a-4f11-96fe-9b2feab2adbe" class="bulleted-list"><li style="list-style-type:circle"></li></ul></li></ul><p id="964342e9-6901-4973-afb1-a0925b2111a4" class="">A linguagem de programação C é uma das linguagens de programação mais influentes e amplamente utilizadas na história da computação. </p><p id="f5503cae-743c-4132-8496-3f015ac7e73b" class="">Desenvolvida por Dennis Ritchie na década de 1970, a linguagem C desempenhou um papel fundamental no desenvolvimento de sistemas operacionais, compiladores e uma ampla gama de software de sistema e aplicativos. </p><h2 id="c474e005-dc49-4364-aa38-66b74aed7b03" class=""><strong>Origens da Linguagem C</strong></h2><p id="47ddfbf9-7856-4b24-b4ca-aeeaec453de7" class="">A linguagem C teve suas origens no laboratório Bell da AT&amp;T (American Telephone and Telegraph Company) nos Estados Unidos. Ela foi desenvolvida como uma evolução da linguagem de programação B, criada por Ken Thompson, que por sua vez era uma simplificação da linguagem BCPL. </p><p id="b4d593ae-7dad-482a-9e13-dece21d64317" class="">O principal objetivo de Dennis Ritchie ao criar a linguagem C era desenvolver um sistema operacional (que mais tarde se tornaria o Unix) e, para isso, ele precisava de uma linguagem de programação eficiente e portável.</p><h2 id="04e9cf88-fe8f-4a0a-a307-693a20520740" class=""><strong>Características da Linguagem C</strong></h2><p id="b62a2dc8-c4d9-4679-9d23-6f7f6ea2fec3" class="">A linguagem C é conhecida por suas características distintivas, que a tornam uma escolha popular para programadores em todo o mundo:</p><ol type="1" id="7fc29f86-8244-4cea-99b3-0148d5a8421e" class="numbered-list" start="1"><li><strong>Portabilidade</strong>: O código escrito em C é altamente portável, o que significa que ele pode ser compilado e executado em uma variedade de sistemas operacionais e arquiteturas de computadores. Isso é possível devido à separação das preocupações entre o código em C e o sistema operacional, tornando-o independente de plataforma.</li></ol><ol type="1" id="c0deb9ed-3f32-4007-9e9f-12c0f39d144b" class="numbered-list" start="2"><li><strong>Eficiência</strong>: A linguagem C permite um controle de baixo nível sobre os recursos do computador, tornando-a ideal para o desenvolvimento de software de alto desempenho. Os programadores podem acessar diretamente a memória e os registradores da CPU, o que é essencial em muitas aplicações, como sistemas embarcados e jogos.</li></ol><ol type="1" id="9675995d-611d-48e1-9ebd-ed2c73acb0f9" class="numbered-list" start="3"><li><strong>Sintaxe Simples</strong>: A sintaxe da linguagem C é relativamente simples e clara, facilitando a leitura e escrita de código. Isso a torna uma excelente escolha para iniciantes e profissionais experientes.</li></ol><ol type="1" id="69f51026-dfbf-4217-ae53-30aec9a5fe2b" class="numbered-list" start="4"><li><strong>Bibliotecas Padrão</strong>: A linguagem C vem com uma extensa biblioteca padrão que oferece funções para tarefas comuns, como entrada/saída de dados, manipulação de strings e gerenciamento de memória. Isso economiza tempo e esforço, uma vez que os programadores podem usar essas funções já testadas e otimizadas.</li></ol><ol type="1" id="e0ada700-6f34-4271-aa61-0d02e6ebe19a" class="numbered-list" start="5"><li><strong>Flexibilidade</strong>: A linguagem C é flexível o suficiente para suportar vários paradigmas de programação, incluindo programação procedural e orientada a objetos, através de extensões como o C++.</li></ol><ol type="1" id="07badb19-acd8-4ac4-bb7c-17e4f2d72bb7" class="numbered-list" start="6"><li><strong>Comunidade Ativa</strong>: A linguagem C possui uma comunidade de programadores ativos e uma vasta quantidade de recursos, tutoriais e bibliotecas de terceiros disponíveis, o que facilita o desenvolvimento de software de alta qualidade.</li></ol><h2 id="7c07270e-daeb-4b02-a1b6-5fdceb9a4343" class=""><strong>Aplicações da Linguagem C</strong></h2><p id="dd3bee7d-e77f-4d2e-9ec8-55e5ade90782" class="">A linguagem C é amplamente utilizada em uma variedade de domínios, incluindo:</p><ol type="1" id="3b21275a-97cf-405a-9003-56bb166fc192" class="numbered-list" start="1"><li><strong>Desenvolvimento de Sistemas</strong>: A criação de sistemas operacionais, drivers de hardware e software de baixo nível muitas vezes é feita em C devido ao seu controle fino sobre o hardware.</li></ol><ol type="1" id="2f2aa3b9-5f0f-4374-a86a-75b9db89605e" class="numbered-list" start="2"><li><strong>Programação Embarcada</strong>: Dispositivos embarcados, como microcontroladores e sistemas IoT, frequentemente são programados em C devido à eficiência e portabilidade da linguagem.</li></ol><ol type="1" id="ec394751-0662-4732-b32d-df34c8e4236f" class="numbered-list" start="3"><li><strong>Jogos e Gráficos</strong>: Muitos jogos e aplicativos gráficos de alto desempenho são escritos em C para aproveitar ao máximo os recursos de hardware.</li></ol><ol type="1" id="ae7cfb71-f0ae-401f-a332-3a321426e639" class="numbered-list" start="4"><li><strong>Desenvolvimento de Compiladores</strong>: A própria linguagem C é frequentemente usada no desenvolvimento de compiladores e interpretadores.</li></ol><ol type="1" id="8e582c34-c5ee-490c-bfba-642a5386207e" class="numbered-list" start="5"><li><strong>Aplicações de Tempo Real</strong>: Sistemas de tempo real, como controle de tráfego aéreo e automação industrial, muitas vezes utilizam C devido à sua capacidade de responder a eventos em tempo real.</li></ol><ol type="1" id="209c2c22-8796-4ff8-a452-e07247d60d50" class="numbered-list" start="6"><li><strong>Aplicações de Alto Desempenho</strong>: Aplicações científicas, financeiras e de simulação aproveitam a eficiência de C para processamento rápido de dados.</li></ol><p id="69f7d9cc-07ef-4edf-9616-d8317a1949a1" class="">Em resumo, a linguagem de programação C desempenhou e continua a desempenhar um papel crucial na computação moderna, oferecendo uma combinação única de portabilidade, eficiência e flexibilidade. Ela é uma escolha sólida para programadores que desejam desenvolver software de alto desempenho e sistemas de baixo nível, e sua influência pode ser vista em muitas outras linguagens de programação modernas.</p><p id="7442a853-5039-4397-9c09-dd40de1ec519" class="">
+</p><p id="ab182bd6-5000-42be-a0e8-66c3b180dcc4" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
