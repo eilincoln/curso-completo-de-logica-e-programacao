@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1584205420 source:c:\curso-completo-de-logica-e-programacao\03-linguagem-de-programacao-c\codigos-em-c\primeiro-programa\main.c
+	<stdio.h>
+	<stdlib.h>
+
